@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleas.irg">
+<head th:replace="login :: head">
+<meta http-equiv=”Content-Type” content=”text/html; charset="utf-8" />
+</head>
+<body>
+	<div id="login" class="form-group">
+		<h2 th:text="${titulo}"></h2>
+		<form th:action="@{/activar}">
+		<div>
+			<label>Usuario</label> <input type="text" name="usuario"
+				class="form-control"
+				placeholder="Empresa a la que pertenese" autofocus required />
+
+		</div>
+		<div>
+			<label>Clave</label> <input type="text" name="password" id="contrasenia"
+				class="form-control" placeholder="ingrese nombre de usuarios"
+				required />
+		</div>
+		<div>
+			<label>Confirmar clave</label> <input type="password" name="contrasenia2"
+				id="contrasenia2" class="form-control"
+				placeholder="repita por favor su clave" required />
+		</div>
+		<div>
+			<input type="submit" value="Activar" class="btn btn-primary" />
+		</div>
+		</form>
+		<div>
+			<a th:href="@{/}">Iniciar sessión</a>
+		</div>
+		<div>
+			<h3 th:text="${respuesta}"></h3>
+		</div>
+</body>
+</html>

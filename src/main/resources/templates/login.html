@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+<meta http-equiv=”Content-Type” content=”text/html; charset="utf-8" />
+<title th:text="${titulo}"></title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Droid+Sans"
+	rel="stylesheet">
+<!-- Bootstrap CSS CDN -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/estilo.css">
+</head>
+<body>
+	<div id="login" class="form-group">
+		<h2 th:text="${titulo}"></h2>
+		<form th:action="@{/ingresar}" method="post">
+			<div>
+				<label>Usuario</label> <input type="text" name="username"
+					id="username" class="form-control" placeholder="correo electronico"
+					autofocus required />
+
+			</div>
+			<div>
+				<label>Contraseña</label> <input type="password" name="contrasenia"
+					id="contrasenia" class="form-control"
+					placeholder="ingrese su contraseña" required />
+			</div>
+			<div>
+				<input type="submit" value="Ingresar" class="btn btn-primary" />
+			</div>
+		</form>
+		<div>
+			<a>Olvidé mi contraseña</a> <br> <a th:href="@{/registrate}">Registrate
+				en el sistema</a>
+		</div>
+		<div>
+			<h3 th:text="${respuesta}"></h3>
+		</div>
+	</div>
+</body>
+<footer> 
+
+<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#sidebarCollapse').on('click', function() {
+				$('#sidebar').toggleClass('active');
+				$(this).toggleClass('active');
+			});
+		});
+	</script></footer>
+</html>
