@@ -38,8 +38,7 @@ public class UsuarioController {
 	@RequestMapping(value = "/ingresar", method = RequestMethod.POST)
 	public String ingresar(@RequestParam(name = "username") String usuario,
 			@RequestParam(name = "contrasenia") String contrasenia, Model model) {
-		Usuario u = usuarioService.findByUsername(usuario);
-		System.out.println(u);
+		Usuario u = usuarioService.findByUsername(usuario);		
 
 		if (u != null) {
 			if (u.getPassword()!=null && u.getPassword().equals(contrasenia)) {
@@ -75,16 +74,20 @@ public class UsuarioController {
 		return "registroUsuario";
 	}
 	
-	@RequestMapping(value = "/confirmarCuenta", method = RequestMethod.POST)
+	@RequestMapping(value = "/confirmarCuenta")
 	public String activar(@RequestParam(name = "contrasenia") String contrasenia,
 							@RequestParam(name = "usuario") String usuario, 
 							@RequestParam(name = "contrasenia2") String contrasenia2,
 							Model model ) {		
-		Usuario u = usuarioService.findByUsername(usuario);
+		Usuario u = usuarioService.findByUsername(usuario);		
 		if(u!=null) {
-			if(contrasenia==contrasenia2) {
+			if(u.getPassword()!=null) {
+				model.addAttribute("respuesta","Esta cuenta ya ha sido activada anteriomente");
+				return "activarCuenta";
+			}
+			if(contrasenia.equals(contrasenia2)) {
 				u.setPassword(contrasenia);
-				usuarioService.save(u);
+				usuarioService.save(u);				
 				return "redirect:/";
 			}else {
 				model.addAttribute("respuesta","Las contraseñas no coinciden");
@@ -92,7 +95,15 @@ public class UsuarioController {
 			}
 		}
 		model.addAttribute("respuesta","El usuario "+usuario+" no existe");		
-		return null;
+		return "activarCuenta";
+	}
+	
+	
+	@RequestMapping(value = "/listaUsuarios")
+	public String listar(Model model) {
+		
+		model.addAttribute("usuarios",usuarioService.findAll());
+		return "usuarios";
 	}
 
 }

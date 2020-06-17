@@ -6,7 +6,7 @@
 <body>
 	<div id="login" class="form-group">
 		<h2 th:text="${titulo}"></h2>
-		<form th:action="@{/activar}">
+		<form th:action="@{/confirmarCuenta}" >
 		<div>
 			<label>Usuario</label> <input type="text" name="usuario"
 				class="form-control"
@@ -14,7 +14,7 @@
 
 		</div>
 		<div>
-			<label>Clave</label> <input type="text" name="password" id="contrasenia"
+			<label>Clave</label> <input type="password" name="contrasenia" id="contrasenia"
 				class="form-control" placeholder="ingrese nombre de usuarios"
 				required />
 		</div>
