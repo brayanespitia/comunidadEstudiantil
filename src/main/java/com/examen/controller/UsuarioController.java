@@ -18,22 +18,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.examen.model.entity.Rol;
 import com.examen.model.entity.Usuario;
 import com.examen.model.service.JpaUserDetailsService;
+import com.examen.model.service.PersonaServiceImp;
 import com.examen.model.service.RolServiceImp;
 import com.examen.model.service.UsuarioServiceImp;
 
-
 @Controller
 public class UsuarioController {
-	
+
 	@Autowired
 	private RolServiceImp<Rol> rolService;
 
 	@Autowired
 	private UsuarioServiceImp<Usuario> usuarioService;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
 
 	@RequestMapping(value = "/registrate")
 	public String login(Model model) {
@@ -46,88 +45,96 @@ public class UsuarioController {
 		model.addAttribute("titulo", "Activar mi cuenta");
 		return "activarCuenta";
 	}
-	
-	
+
 	@RequestMapping(value = "/login")
 	public String ingresar(Model model, Principal principal) {
 
 		if (principal != null) {
 			return "redirect:index";
 		}
-		
+
 		model.addAttribute("titulo", "Ingreso de usuarios al sistema");
 		return "login";
 	}
-	
+
 	@RequestMapping(value = "/registrarUsuario", method = RequestMethod.POST)
 	public String registrar(@RequestParam(name = "empresa") String empresa,
-							@RequestParam(name = "usuario") String usuario, 
-							@RequestParam(name = "email") String email,
-							Model model) {	
-			
-		
-		if (usuarioService.findByUsername(usuario)==null) {
+			@RequestParam(name = "usuario") String usuario, @RequestParam(name = "email") String email, Model model) {
+
+		if (usuarioService.findByUsername(usuario) == null) {
 			Usuario u = new Usuario();
 			u.setUsername(usuario);
 			u.setEmail(email);
 			u.setEmpresa(empresa);
-			
+			u.setEstado("activo");
+			u.setRol(rolService.findOne(1));
 			usuarioService.save(u);
 			System.out.println("save");
 			return "redirect:activarCuenta";
-		}		
+		}
 		model.addAttribute("titulo", "registro de usuarios");
-		model.addAttribute("respuesta","El nombre de usuario "+ usuario
-							+" no se encuentra disponible");
+		model.addAttribute("respuesta", "El nombre de usuario " + usuario + " no se encuentra disponible");
 		return "registroUsuario";
 	}
-	
+
 	@RequestMapping(value = "/confirmarCuenta")
 	public String activar(@RequestParam(name = "contrasenia") String contrasenia,
-							@RequestParam(name = "usuario") String usuario, 
-							@RequestParam(name = "contrasenia2") String contrasenia2,
-							Model model ) {		
-		Usuario u = usuarioService.findByUsername(usuario);		
-		if(u!=null) {
-			if(u.getPassword()==null) {
-				model.addAttribute("respuesta","Esta cuenta ya ha sido activada anteriomente");
+			@RequestParam(name = "usuario") String usuario, @RequestParam(name = "contrasenia2") String contrasenia2,
+			Model model) {
+		Usuario u = usuarioService.findByUsername(usuario);
+		if (u != null) {
+			if (u.getPassword() != null) {
+				model.addAttribute("respuesta", "Esta cuenta ya ha sido activada anteriomente");
 				return "activarCuenta";
 			}
-			if(contrasenia.equals(contrasenia2)) {
-				String con=passwordEncoder.encode(contrasenia);
+			if (contrasenia.equals(contrasenia2)) {
+				String con = passwordEncoder.encode(contrasenia);
 				u.setPassword(con);
-				usuarioService.save(u);		
+				usuarioService.save(u);
 				return "redirect:/";
-			}else {
-				model.addAttribute("respuesta","Las contraseñas no coinciden");
+			} else {
+				model.addAttribute("respuesta", "Las contraseñas no coinciden");
 				return "activarCuenta";
 			}
 		}
-		model.addAttribute("respuesta","El usuario "+usuario+" no existe");		
+		model.addAttribute("respuesta", "El usuario " + usuario + " no existe");
 		return "activarCuenta";
 	}
-	
-	
+
 	@RequestMapping(value = "/listaUsuarios")
 	public String listar(Model model) {
-		
-		model.addAttribute("usuarios",usuarioService.findAll());
+
+		model.addAttribute("usuarios", usuarioService.findAll());
 		return "usuarios";
 	}
-	
+
 	@RequestMapping(value = "/editarUsuario/{idUsuario}")
-	public String editarUsuario(@PathVariable(value = "idUsuario") Long id,Map<String, Object> model) {
-		Usuario usuario = usuarioService.findOne((id));		
-		model.put("usuario",usuario);
+	public String editarUsuario(@PathVariable(value = "idUsuario") Long id, Map<String, Object> model) {
+		Usuario usuario = usuarioService.findOne((id));
+		model.put("opcion", "Editar usuario");
+		model.put("usuario", usuario);
+		return "editarUsuario";
+	}
+	
+	@RequestMapping(value = "/editarUsuario")
+	public String editarUsuario(Model model) {
+		Usuario usuario = new Usuario();
+		model.addAttribute("titulo","Nuevo usuario");
+		model.addAttribute("opcion","Nuevo usuario");
+		model.addAttribute("usuario",usuario);
 		return "editarUsuario";
 	}
 
 	@RequestMapping(value = "/guardarU")
-	public String guardar(@Validated Usuario usuario,Model model) {		
+	public String guardar(@Validated Usuario usuario, Model model) {
+		if (usuario.getIdUsuario() > 0) {
+			usuario.setEmpresa("ufps");
+			usuario.setRol(rolService.findOne(2));
+		}
+		usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 		usuarioService.save(usuario);
-		model.addAttribute("usuarios",usuarioService.findAll());
+		model.addAttribute("usuarios", usuarioService.findAll());
 		return "redirect:listaUsuarios";
 	}
-
 
 }

@@ -26,6 +26,8 @@ public class Usuario implements Serializable {
 	
 	private String email;
 	
+	private String estado;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Rol idrol;
 
@@ -80,6 +82,14 @@ public class Usuario implements Serializable {
 
 	public void setRol(Rol idrol) {
 		this.idrol = idrol;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 		

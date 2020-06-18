@@ -19,8 +19,7 @@ public class Rol implements Serializable {
 	private Long idrol;
 
 	private String descripcion;
-
-	// bi-directional many-to-one association to Persona
+	
 	@OneToMany(mappedBy = "idrol",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Usuario> usuarios;
 

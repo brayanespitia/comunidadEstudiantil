@@ -13,19 +13,18 @@
 			<tr>
 				<th>ID</th>				
 				<th>nombre</th>
-				<th>Sexo</th>
-				<th>Tipo</th>
+				<th>fecha</th>
+				<th>temperatura</th>
 				<th style="text-align: center; width: 100px;">Aciones</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="persona: ${personas}">
-				<td th:text="${persona.id}"></td>
-				<td th:text="${persona.nombre}"></td>
-				<td th:text="${persona.genero}"></td>
-				<td th:text="${persona.tipo.descripcion}"></td>
+			<tr th:each="ingreso: ${ingresos}">
+				<td th:text="${ingreso.id}"></td>
+				<td th:text="${ingreso.persona.nombre}"></td>
+				<td th:text="${ingreso.temperatura}"></td>				
 				<td><a class="btn btn-primary btn-xs dt-edit"
-					th:href="@{/listaIngresos/}+ ${persona.id}"><span
+					><span
 						class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></td>
 			</tr>
 		</tbody>
