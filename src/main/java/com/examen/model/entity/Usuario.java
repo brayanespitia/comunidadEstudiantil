@@ -3,6 +3,7 @@ package com.examen.model.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
+
 /**
  * The persistent class for the persona database table.
  * 
@@ -24,6 +25,9 @@ public class Usuario implements Serializable {
 	private String empresa;
 	
 	private String email;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Rol idrol;
 
 	
 	public Long getIdUsuario() {
@@ -68,6 +72,14 @@ public class Usuario implements Serializable {
 
 	public void setId(Long id) {
 		this.idUsuario = id;
+	}
+
+	public Rol getRol() {
+		return idrol;
+	}
+
+	public void setRol(Rol idrol) {
+		this.idrol = idrol;
 	}
 
 		

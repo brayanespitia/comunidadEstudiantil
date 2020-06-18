@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="login :: head">
+<meta http-equiv=”Content-Type” content=”text/html; charset="utf-8" />
+</head>
+<body>
+	<div th:replace="menu :: menu"></div>
+	<form th:action="@{/guardarU}" th:object="${usuario}" method="post">
+
+		<div>
+			<label>Usuario</label> <input th:field="*{username}" type="text"
+				class="form-control" required />
+		</div>
+		<div>
+			<label>Email</label> <input type="email" th:field="*{email}"
+				name="email" id="email" class="form-control" required />
+		</div>
+		<div>
+			<label>Clave</label> <input th:field="*{password}" type="password"
+				name="contrasenia" class="form-control"
+				placeholder="ingrese una contraseña" required />
+		</div>
+
+		<div>
+			<label>Confirmar Clave</label> <input type="password"
+				name="contrasenia2" class="form-control"
+				placeholder="ingrese una contraseña" required />
+		</div>
+
+		<div>
+			<input type="submit" value="guardar"
+				class="btn btn-primary btn-xs dt-edit">
+		</div>
+
+		<input type="hidden" th:field="*{idUsuario}">
+	</form>
+	<div>
+		<h3 th:text="${respuesta}"></h3>
+	</div>
+
+</body>
+</html>

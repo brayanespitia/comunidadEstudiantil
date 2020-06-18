@@ -176,6 +176,7 @@ a.article, a.article:hover {
 	width: 100%;	
 }
 
+
 #sidebarCollapse {
 	width: 40px;
 	height: 40px;
@@ -281,6 +282,9 @@ a.article, a.article:hover {
     font-weight: bolder;   
 	color:black;	
 	width: 100%;
+}
+#content div{
+	width: 30%;
 }
 
 

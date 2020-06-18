@@ -29,27 +29,26 @@
 
 				<li><a href=""> Dashboard</a></li>
 				<li><a th:href="@{/listaUsuarios}"></span> Usuarios</a></li>
-				<li><a href=""></span> Personas</a></li>
+				<li><a th:href="@{/editarUsuario}"></span> Personas</a></li>
 				<li><a href=""></span> Ingresos</a></li>
 				<li><a href=""> Visitantes</a></li>
 				<li><a href=""> Alertas</a></li>
 				<li><a href=""> Reportes</a></li>
-				<li><a th:href="@{/}"> Salir</a></li>
+				<li><form th:action="@{/logout}" method="post">
+										<button type="submit" class="btn">Salir</button>
+									</form></li>
 
 			</ul>
 
 
 		</nav>
 
-		<!-- Page Content Holder -->
 		<div id="content">
+			
 </body>
 
 <footer th:fragment="footer" id="footer">
-	<div>
-		<p>Sistema de gestion de calidad &copy;UFPS</p>
-	</div>
-	<!-- jQuery CDN -->
+		<!-- jQuery CDN -->
 	<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 	<!-- Bootstrap Js CDN -->
 	<script

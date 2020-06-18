@@ -17,7 +17,7 @@
 <body>
 	<div id="login" class="form-group">
 		<h2 th:text="${titulo}"></h2>
-		<form th:action="@{/ingresar}" method="post">
+		<form th:action="@{/login}" method="post">
 			<div>
 				<label>Usuario</label> <input type="text" name="username"
 					id="username" class="form-control" placeholder="correo electronico"
@@ -25,8 +25,8 @@
 
 			</div>
 			<div>
-				<label>Contraseña</label> <input type="password" name="contrasenia"
-					id="contrasenia" class="form-control"
+				<label>Contraseña</label> <input type="password" name="password"
+					id="password" class="form-control"
 					placeholder="ingrese su contraseña" required />
 			</div>
 			<div>
